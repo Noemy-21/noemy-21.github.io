@@ -7,22 +7,26 @@
     <style>
         
         body {
-            background-color: #800080; /* Viola */
+           margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #800080; /* Sfondo viola */
             color: white;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
 
-        
-        .network-lines {
+          body::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('') repeat; /* Sostituisci con il tuo file di reti azzurre */
-            pointer-events: none;
+            background: 
+                linear-gradient(90deg, #00BFFF 1px, transparent 1px), 
+                linear-gradient(180deg, #00BFFF 1px, transparent 1px); 
+            background-size: 50px 50px; 
+            z-index: -1; 
         }
 
         
