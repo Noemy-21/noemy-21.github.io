@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rete Animata</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color:black;
+            background-color: violet;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .content {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        h1 {
+            color:black;
+            font-size: 70px;
+        }
+        h2 {
+            color: black;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="networkCanvas"></canvas>
+    <div class="content">
+        <h1>Descrizione del Progetto finale Networking</h1>
+        <h2>Il progetto è stato ideato sulla base di un azienda con più sedi, una situata a Pescara, una a Chieti ed infine una a Francavilla. In aggiunta abbiamo i dispositivi domestici del titolare dell'azienda</h2>
+        
+    </div>
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const nodes = Array.from({ length: 6 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            dx: (Math.random() - 0.5) * 2,
+            dy: (Math.random() - 0.5) * 2
+        }));
+
+        function drawNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.lineWidth = 2;
+            
+            nodes.forEach((node, index) => {
+                node.x += node.dx;
+                node.y += node.dy;
+                
+                if (node.x <= 0 || node.x >= canvas.width) node.dx *= -1;
+                if (node.y <= 0 || node.y >= canvas.height) node.dy *= -1;
+                
+                nodes.forEach((target, targetIndex) => {
+                    if (index !== targetIndex) {
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(target.x, target.y);
+                        ctx.stroke();
+                    }
+                });
+                ctx.fillStyle = '#ff0099';
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function animate() {
+            drawNetwork();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
